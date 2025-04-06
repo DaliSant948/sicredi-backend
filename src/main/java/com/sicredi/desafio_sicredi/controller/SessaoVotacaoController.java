@@ -13,7 +13,6 @@ public class SessaoVotacaoController {
 
     private final SessaoVotacaoService sessaoService;
 
-
     public SessaoVotacaoController(SessaoVotacaoService sessaoService) {
         this.sessaoService = sessaoService;
     }
