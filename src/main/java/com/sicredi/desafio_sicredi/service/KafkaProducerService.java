@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaProducerService {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     @Autowired
-    public KafkaProducerService(KafkaTemplate<String, String> kafkaTemplate) {
+    public KafkaProducerService(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void enviarMensagem(String topico, String mensagem) {
-        kafkaTemplate.send(topico, mensagem);
+    public void enviarEvento(String topico, Object payload) {
+        kafkaTemplate.send(topico, payload);
     }
 }

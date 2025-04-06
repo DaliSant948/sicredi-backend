@@ -1,5 +1,6 @@
 package com.sicredi.desafio_sicredi.service;
 
+import com.sicredi.desafio_sicredi.dto.VotoKafkaDTO;
 import com.sicredi.desafio_sicredi.dto.VotoRequestDTO;
 import com.sicredi.desafio_sicredi.dto.VotoResponseDTO;
 import com.sicredi.desafio_sicredi.exception.SessaoEncerradaException;
@@ -28,6 +29,9 @@ public class VotoService {
     @Autowired
     private SessaoVotacaoRepository sessaoRepository;
 
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
     @Transactional
     public VotoResponseDTO votar(Long pautaId, VotoRequestDTO votoRequest) {
 
@@ -36,7 +40,7 @@ public class VotoService {
 
         LocalDateTime agora = LocalDateTime.now();
         if (agora.isBefore(sessao.getInicio()) || agora.isAfter(sessao.getFim())) {
-            throw new SessaoEncerradaException("Sessão não está aberta");
+            throw new SessaoEncerradaException("Sessão está encerrada ou fora do horário permitido para votação.");
         }
 
         if (votoRepository.existsBySessaoVotacaoIdAndCpfAssociado(sessao.getId(), votoRequest.getCpfAssociado())) {
@@ -51,6 +55,15 @@ public class VotoService {
         voto = votoRepository.save(voto);
 
         logger.info("Voto registrado: Sessão {} - CPF {}", sessao.getId(), voto.getCpfAssociado());
+
+        VotoKafkaDTO evento = new VotoKafkaDTO(
+                voto.getCpfAssociado(),
+                pautaId,
+                voto.getOpcao(),
+                LocalDateTime.now()
+        );
+
+        kafkaProducerService.enviarEvento("votacoes-realizadas", evento);
 
         return new VotoResponseDTO(
                 voto.getId(),
