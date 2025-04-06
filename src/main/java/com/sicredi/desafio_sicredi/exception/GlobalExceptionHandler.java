@@ -30,16 +30,28 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({SessaoEncerradaException.class, VotoDuplicadoException.class})
-    public ResponseEntity<Object> handleBadRequest(RuntimeException ex) {
-        logger.error("Erro na requisição: {}", ex.getMessage());
+    @ExceptionHandler(SessaoEncerradaException.class)
+    public ResponseEntity<Object> handleSessaoEncerrada(SessaoEncerradaException ex) {
+        logger.error("Sessão encerrada: {}", ex.getMessage());
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", HttpStatus.BAD_REQUEST.value());
-        body.put("error", "Bad Request");
+        body.put("error", "Sessão Encerrada");
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(VotoDuplicadoException.class)
+    public ResponseEntity<Object> handleVotoDuplicado(VotoDuplicadoException ex) {
+        logger.error("Voto duplicado: {}", ex.getMessage());
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.CONFLICT.value());
+        body.put("error", "Voto Duplicado");
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
