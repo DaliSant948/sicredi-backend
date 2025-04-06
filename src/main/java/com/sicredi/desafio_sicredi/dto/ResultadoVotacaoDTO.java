@@ -10,6 +10,5 @@ public class ResultadoVotacaoDTO {
     private Long pautaId;
     private Long totalVotosSim;
     private Long totalVotosNao;
-    // Você pode incluir um campo para o status, como "APROVADA" ou "REJEITADA"
-    private String resultado;
+    private StatusVotacao resultado;
 }
