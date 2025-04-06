@@ -8,6 +8,7 @@ public class SessaoVotacaoResponseDTO {
     private LocalDateTime inicio;
     private LocalDateTime fim;
     private Long idPauta;
+    private boolean encerrada;
 
     public Long getIdSessao() {
         return idSessao;
@@ -41,10 +42,19 @@ public class SessaoVotacaoResponseDTO {
         this.idPauta = idPauta;
     }
 
-    public SessaoVotacaoResponseDTO(Long idSessao, LocalDateTime inicio, LocalDateTime fim, Long idPauta) {
+    public boolean isEncerrada() {
+        return encerrada;
+    }
+
+    public void setEncerrada(boolean encerrada) {
+        this.encerrada = encerrada;
+    }
+
+    public SessaoVotacaoResponseDTO(Long idSessao, LocalDateTime inicio, LocalDateTime fim, Long idPauta, boolean encerrada) {
         this.idSessao = idSessao;
         this.inicio = inicio;
         this.fim = fim;
         this.idPauta = idPauta;
+        this.encerrada = encerrada;
     }
 }

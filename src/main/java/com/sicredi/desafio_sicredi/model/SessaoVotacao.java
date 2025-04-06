@@ -37,6 +37,9 @@ public class SessaoVotacao {
     @OneToMany(mappedBy = "sessaoVotacao", cascade = CascadeType.ALL)
     private List<Voto> votos;
 
+    @Column(nullable = false)
+    private boolean encerrada = false;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
