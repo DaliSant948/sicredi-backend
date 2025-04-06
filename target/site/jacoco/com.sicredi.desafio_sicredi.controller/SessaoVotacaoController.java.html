@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SessaoVotacaoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DesafioBackendSicredi</a> &gt; <a href="index.source.html" class="el_package">com.sicredi.desafio_sicredi.controller</a> &gt; <span class="el_source">SessaoVotacaoController.java</span></div><h1>SessaoVotacaoController.java</h1><pre class="source lang-java linenums">package com.sicredi.desafio_sicredi.controller;
+
+import com.sicredi.desafio_sicredi.dto.SessaoVotacaoRequestDTO;
+import com.sicredi.desafio_sicredi.dto.SessaoVotacaoResponseDTO;
+import com.sicredi.desafio_sicredi.model.SessaoVotacao;
+import com.sicredi.desafio_sicredi.repository.SessaoVotacaoRepository;
+import com.sicredi.desafio_sicredi.service.SessaoVotacaoService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping(&quot;/api/sessoes&quot;)
+public class SessaoVotacaoController {
+
+    private final SessaoVotacaoService sessaoService;
+    private final SessaoVotacaoRepository sessaoRepository;
+
+<span class="fc" id="L22">    public SessaoVotacaoController(SessaoVotacaoService sessaoService, SessaoVotacaoRepository sessaoRepository) {</span>
+<span class="fc" id="L23">        this.sessaoService = sessaoService;</span>
+<span class="fc" id="L24">        this.sessaoRepository = sessaoRepository;</span>
+<span class="fc" id="L25">    }</span>
+
+    @PostMapping
+    public ResponseEntity&lt;SessaoVotacaoResponseDTO&gt; abrirSessao(@Valid @RequestBody SessaoVotacaoRequestDTO dto) {
+<span class="fc" id="L29">        SessaoVotacaoResponseDTO response = sessaoService.abrirSessao(dto);</span>
+<span class="fc" id="L30">        return ResponseEntity.ok(response);</span>
+    }
+
+    @GetMapping
+    public List&lt;SessaoVotacaoResponseDTO&gt; listarTodas() {
+<span class="fc" id="L35">        return sessaoRepository.findAll()</span>
+<span class="fc" id="L36">                .stream()</span>
+<span class="fc" id="L37">                .map(sessao -&gt; new SessaoVotacaoResponseDTO(</span>
+<span class="fc" id="L38">                        sessao.getId(),</span>
+<span class="fc" id="L39">                        sessao.getInicio(),</span>
+<span class="fc" id="L40">                        sessao.getFim(),</span>
+<span class="fc" id="L41">                        sessao.getPauta().getId(),</span>
+<span class="fc" id="L42">                        sessao.isEncerrada()</span>
+<span class="fc" id="L43">                ))</span>
+<span class="fc" id="L44">                .collect(Collectors.toList());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

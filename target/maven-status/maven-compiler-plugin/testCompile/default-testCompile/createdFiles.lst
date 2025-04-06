@@ -1,0 +1,5 @@
+com\sicredi\desafio_sicredi\service\VotoServiceTest.class
+com\sicredi\desafio_sicredi\DesafioSicrediApplicationTests.class
+com\sicredi\desafio_sicredi\service\SessaoVotacaoServiceTest.class
+com\sicredi\desafio_sicredi\service\VotoControllerTest.class
+com\sicredi\desafio_sicredi\service\SessaoVotacaoControllerTest.class
