@@ -1,5 +1,6 @@
 package com.sicredi.desafio_sicredi.service;
 
+import com.sicredi.desafio_sicredi.dto.SessaoEncerradaDTO;
 import com.sicredi.desafio_sicredi.dto.SessaoVotacaoRequestDTO;
 import com.sicredi.desafio_sicredi.dto.SessaoVotacaoResponseDTO;
 import com.sicredi.desafio_sicredi.exception.PautaNaoEncontradaException;
@@ -8,9 +9,11 @@ import com.sicredi.desafio_sicredi.model.SessaoVotacao;
 import com.sicredi.desafio_sicredi.repository.PautaRepository;
 import com.sicredi.desafio_sicredi.repository.SessaoVotacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class SessaoVotacaoService {
@@ -19,6 +22,9 @@ public class SessaoVotacaoService {
 
     @Autowired
     private PautaRepository pautaRepository;
+
+    @Autowired
+    private KafkaTemplate<String, SessaoEncerradaDTO> kafkaTemplate;
 
     public SessaoVotacaoResponseDTO abrirSessao(SessaoVotacaoRequestDTO sessaoRequest) {
 
@@ -32,14 +38,33 @@ public class SessaoVotacaoService {
         sessao.setInicio(inicio);
         sessao.setFim(fim);
         sessao.setPauta(pauta);
-
         SessaoVotacao sessaoSalva = sessaoRepository.save(sessao);
 
         return new SessaoVotacaoResponseDTO(
                 sessaoSalva.getId(),
                 sessaoSalva.getInicio(),
                 sessaoSalva.getFim(),
-                pauta.getId()
-        );
+                pauta.getId(),
+                sessao.isEncerrada());
+    }
+
+    public void encerrarSessoesExpiradas() {
+        List<SessaoVotacao> sessoesAtivas = sessaoRepository.findAll();
+
+        for (SessaoVotacao sessao : sessoesAtivas) {
+            if (!sessao.isEncerrada() && LocalDateTime.now().isAfter(sessao.getFim())) {
+                sessao.setEncerrada(true);
+                sessaoRepository.save(sessao);
+
+                // Enviar evento para Kafka
+                SessaoEncerradaDTO evento = new SessaoEncerradaDTO(
+                        sessao.getId(),
+                        sessao.getPauta().getId(),
+                        sessao.getFim()
+                );
+
+                kafkaTemplate.send("sessoes-encerradas", evento);
+            }
+        }
     }
 }
