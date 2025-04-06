@@ -21,7 +21,7 @@ public class KafkaController {
 
     @PostMapping("/send")
     public ResponseEntity<String> enviarMensagem(@RequestParam String mensagem) {
-        kafkaProducerService.enviarMensagem("topico-teste", mensagem);
+        kafkaProducerService.enviarEvento("topico-teste", mensagem);
         return ResponseEntity.ok("Mensagem enviada: " + mensagem);
     }
 }
