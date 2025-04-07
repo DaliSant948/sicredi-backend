@@ -20,7 +20,7 @@ import java.util.Map;
 @Configuration
 @EnableKafka
 public class KafkaConfig {
-    // PRODUCER
+    
     @Bean
     public ProducerFactory<String, Object> producerFactory() {
         Map<String, Object> config = new HashMap<>();
@@ -35,7 +35,6 @@ public class KafkaConfig {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    // CONSUMER - VotoKafkaDTO
     @Bean
     public ConsumerFactory<String, VotoKafkaDTO> votoKafkaConsumerFactory() {
         Map<String, Object> config = new HashMap<>();
@@ -60,7 +59,6 @@ public class KafkaConfig {
         return factory;
     }
 
-    // CONSUMER - SessaoEncerradaDTO
     @Bean
     public ConsumerFactory<String, SessaoEncerradaDTO> sessaoKafkaConsumerFactory() {
         Map<String, Object> config = new HashMap<>();

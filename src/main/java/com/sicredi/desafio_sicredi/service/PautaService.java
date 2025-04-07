@@ -1,6 +1,5 @@
 package com.sicredi.desafio_sicredi.service;
 
-
 import com.sicredi.desafio_sicredi.dto.PautaRequestDTO;
 import com.sicredi.desafio_sicredi.dto.PautaResponseDTO;
 import com.sicredi.desafio_sicredi.exception.PautaNaoEncontradaException;

@@ -2,7 +2,6 @@ package com.sicredi.desafio_sicredi.controller;
 
 import com.sicredi.desafio_sicredi.dto.SessaoVotacaoRequestDTO;
 import com.sicredi.desafio_sicredi.dto.SessaoVotacaoResponseDTO;
-import com.sicredi.desafio_sicredi.model.SessaoVotacao;
 import com.sicredi.desafio_sicredi.repository.SessaoVotacaoRepository;
 import com.sicredi.desafio_sicredi.service.SessaoVotacaoService;
 import jakarta.validation.Valid;

@@ -43,7 +43,7 @@ Rodar a aplicação localmente:
 ./mvnw spring-boot:run
 
 
-🛰️ Monitoramento do Kafka
+🛰️ Monitoramento Kafka
 Acesse o Kafdrop:
 🔗 http://localhost:9000
 
@@ -63,7 +63,7 @@ Listar pautas: GET /api/pautas
 Abrir sessão: POST /api/sessoes
 Votar: POST /api/votos/{pautaId}
 
-Exemplo de body do voto:
+Exemplo de body voto:
 
 {
   "cpfAssociado": "12345678900",
@@ -84,6 +84,12 @@ Validações e exceções
 📦 Kafka - Resultado publicado
 Mensagem enviada no Kafka ao encerrar sessão:
 📢 Sessão encerrada para a pauta ID: 1
+
+
+## 📊 Cobertura de testes
+Relatório gerado com **JaCoCo**:  
+📎 [🔗 Ver cobertura online](https://dalisant948.github.io/sicredi-backend/)
+
 
 
 ✍️ Autora

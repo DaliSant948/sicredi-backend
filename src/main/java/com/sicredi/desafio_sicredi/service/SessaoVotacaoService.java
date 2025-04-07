@@ -24,7 +24,7 @@ public class SessaoVotacaoService {
     private PautaRepository pautaRepository;
 
     @Autowired
-    private KafkaTemplate<String, SessaoEncerradaDTO> kafkaTemplate;
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     public SessaoVotacaoResponseDTO abrirSessao(SessaoVotacaoRequestDTO sessaoRequest) {
 
@@ -56,13 +56,11 @@ public class SessaoVotacaoService {
                 sessao.setEncerrada(true);
                 sessaoRepository.save(sessao);
 
-                // Enviar evento para Kafka
                 SessaoEncerradaDTO evento = new SessaoEncerradaDTO(
                         sessao.getId(),
                         sessao.getPauta().getId(),
                         sessao.getFim()
                 );
-
                 kafkaTemplate.send("sessoes-encerradas", evento);
             }
         }

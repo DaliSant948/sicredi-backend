@@ -1,7 +1,6 @@
 package com.sicredi.desafio_sicredi.service;
 
 import com.sicredi.desafio_sicredi.dto.SessaoEncerradaDTO;
-import com.sicredi.desafio_sicredi.dto.VotoKafkaDTO;
 import com.sicredi.desafio_sicredi.model.SessaoVotacao;
 import com.sicredi.desafio_sicredi.repository.SessaoVotacaoRepository;
 import org.slf4j.Logger;
@@ -39,7 +38,6 @@ public class SessaoScheduler {
                     sessao.setEncerrada(true);
                     sessaoRepository.save(sessao);
 
-                    // Envia evento Kafka com SessaoEncerradaDTO
                     SessaoEncerradaDTO dto = new SessaoEncerradaDTO(
                             sessao.getId(),
                             sessao.getPauta().getId(),

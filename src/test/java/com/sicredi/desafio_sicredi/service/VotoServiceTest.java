@@ -11,19 +11,15 @@ import com.sicredi.desafio_sicredi.model.SessaoVotacao;
 import com.sicredi.desafio_sicredi.model.Voto;
 import com.sicredi.desafio_sicredi.repository.SessaoVotacaoRepository;
 import com.sicredi.desafio_sicredi.repository.VotoRepository;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
 public class VotoServiceTest {
@@ -55,7 +51,7 @@ public class VotoServiceTest {
 
     @Test
     void deveRegistrarVotoComSucesso() {
-        // Arrange
+
         when(sessaoRepository.findByPautaId(1L)).thenReturn(Optional.of(sessao));
         when(votoRepository.existsBySessaoVotacaoIdAndCpfAssociado(sessao.getId(), request.getCpfAssociado())).thenReturn(false);
         when(votoRepository.save(any())).thenAnswer(invocation -> {
@@ -64,10 +60,8 @@ public class VotoServiceTest {
             return v;
         });
 
-        // Act
         VotoResponseDTO response = votoService.votar(1L, request);
 
-        // Assert
         assertNotNull(response);
         assertEquals("12345678900", response.getCpfAssociado());
         assertEquals("SIM", response.getVoto());

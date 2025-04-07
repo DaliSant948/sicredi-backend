@@ -1,4 +1,5 @@
 package com.sicredi.desafio_sicredi.service;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sicredi.desafio_sicredi.controller.SessaoVotacaoController;
 import com.sicredi.desafio_sicredi.dto.SessaoVotacaoRequestDTO;
@@ -6,23 +7,17 @@ import com.sicredi.desafio_sicredi.dto.SessaoVotacaoResponseDTO;
 import com.sicredi.desafio_sicredi.model.SessaoVotacao;
 import com.sicredi.desafio_sicredi.model.Pauta;
 import com.sicredi.desafio_sicredi.repository.SessaoVotacaoRepository;
-import com.sicredi.desafio_sicredi.service.SessaoVotacaoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.time.LocalDateTime;
 import java.util.List;
-
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
