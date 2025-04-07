@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import static com.sicredi.desafio_sicredi.config.ApiPaths.BASE_V1;
 
 @RestController
-@RequestMapping("/api/sessoes")
+@RequestMapping(BASE_V1 + "/sessoes")
 public class SessaoVotacaoController {
 
     private final SessaoVotacaoService sessaoService;

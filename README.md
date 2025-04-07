@@ -53,21 +53,21 @@ docker-compose up -d
 ## 🔗 Endpoints Principais
 
 ### 📌 Pautas
-- Criar pauta: `POST /api/pautas`
-- Listar pautas: `GET /api/pautas`
+- Criar pauta: `POST /api/v1/pautas`
+- Listar pautas: `GET /api/v1/pautas`
 
 ### 📌 Sessões de Votação
-- Abrir sessão: `POST /api/sessoes`
+- Abrir sessão: `POST /api/v1/sessoes`
 
 ### 📌 Votos
-- Votar: `POST /api/votos/{pautaId}`
-- Obter resultado da votação: `GET /api/votos/resultado/{pautaId}`
+- Votar: `POST /api/v1/votos/{pautaId}`
+- Obter resultado da votação: `GET /api/v1/votos/resultado/{pautaId}`
 
 ### 🧪 Exemplo de Payloads
 
 #### Criar pauta:
 ```json
-{
+{  "nome": "Votação Anual",
   "descricao": "Pauta sobre orçamento anual"
 }
 ```
@@ -149,7 +149,14 @@ src/
 
 ## 📥 Collection Postman
 
-[Download da Collection Postman](postman_collection_sicredi.json)
+[Download da Collection Postman v1](postman_collection_sicredi.json)
+
+---
+
+## 📄 Relatório
+
+Acesse os relatórios do projeto em:
+🔗 Relatórios Sicredi Backend
 
 ---
 

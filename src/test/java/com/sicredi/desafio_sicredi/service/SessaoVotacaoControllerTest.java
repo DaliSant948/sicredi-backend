@@ -51,7 +51,7 @@ public class SessaoVotacaoControllerTest {
 
         when(sessaoService.abrirSessao(Mockito.any())).thenReturn(response);
 
-        mockMvc.perform(post("/api/sessoes")
+        mockMvc.perform(post("/api/v1/sessoes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ public class SessaoVotacaoControllerTest {
 
         when(sessaoRepository.findAll()).thenReturn(List.of(sessao));
 
-        mockMvc.perform(get("/api/sessoes"))
+        mockMvc.perform(get("/api/v1/sessoes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].idSessao").value(1L))
                 .andExpect(jsonPath("$[0].idPauta").value(1L));

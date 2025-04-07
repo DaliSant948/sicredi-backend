@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import static com.sicredi.desafio_sicredi.config.ApiPaths.BASE_V1;
+
 
 @RestController
-@RequestMapping("/kafka")
+@RequestMapping(BASE_V1 + "/kafka")
 public class KafkaController {
 
     private final KafkaProducerService kafkaProducerService;

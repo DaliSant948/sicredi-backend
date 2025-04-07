@@ -17,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,6 +36,8 @@ public class VotoControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    public static final String BASE_V1 = "/api/v1";
+
     @Test
     void deveRegistrarVotoComSucesso() throws Exception {
         VotoRequestDTO request = new VotoRequestDTO("12345678900", OpcaoVoto.SIM);
@@ -43,13 +46,13 @@ public class VotoControllerTest {
         Mockito.when(votoService.votar(eq(1L), any(VotoRequestDTO.class)))
                 .thenReturn(response);
 
-        mockMvc.perform(post("/api/votos/1")
+        mockMvc.perform(post(BASE_V1 + "/votos/1")  
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cpfAssociado").value("12345678900"))
-                .andExpect(jsonPath("$.voto").value("SIM"))
-                .andExpect(jsonPath("$.pautaId").value(1L));
+                        .content(objectMapper.writeValueAsString(request))) 
+                .andExpect(status().isOk())  
+                .andExpect(jsonPath("$.cpfAssociado").value("12345678900"))  
+                .andExpect(jsonPath("$.voto").value("SIM")) 
+                .andExpect(jsonPath("$.pautaId").value(1L));  
     }
 
     @Test
@@ -59,7 +62,7 @@ public class VotoControllerTest {
         Mockito.when(votoService.votar(eq(1L), any(VotoRequestDTO.class)))
                 .thenThrow(new SessaoNaoEncontradaException("Sessão não encontrada"));
 
-        mockMvc.perform(post("/api/votos/1")
+        mockMvc.perform(post(BASE_V1 + "/votos/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound());
@@ -72,7 +75,7 @@ public class VotoControllerTest {
         Mockito.when(votoService.votar(eq(1L), any(VotoRequestDTO.class)))
                 .thenThrow(new SessaoEncerradaException("Sessão encerrada"));
 
-        mockMvc.perform(post("/api/votos/1")
+        mockMvc.perform(post(BASE_V1 + "/votos/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
@@ -85,7 +88,7 @@ public class VotoControllerTest {
         Mockito.when(votoService.votar(eq(1L), any(VotoRequestDTO.class)))
                 .thenThrow(new VotoDuplicadoException("Voto duplicado"));
 
-        mockMvc.perform(post("/api/votos/1")
+        mockMvc.perform(post(BASE_V1 + "/votos/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isConflict());
