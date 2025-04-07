@@ -1,5 +1,6 @@
 package com.sicredi.desafio_sicredi.controller;
 
+import com.sicredi.desafio_sicredi.dto.ResultadoVotacaoDTO;
 import com.sicredi.desafio_sicredi.dto.VotoRequestDTO;
 import com.sicredi.desafio_sicredi.dto.VotoResponseDTO;
 import com.sicredi.desafio_sicredi.service.VotoService;
@@ -21,5 +22,11 @@ public class VotoController {
                                                  @Valid @RequestBody VotoRequestDTO dto) {
         VotoResponseDTO response = votoService.votar(pautaId, dto);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/resultado/{pautaId}")
+    public ResponseEntity<ResultadoVotacaoDTO> obterResultado(@PathVariable Long pautaId) {
+        ResultadoVotacaoDTO resultado = votoService.calcularResultado(pautaId);
+        return ResponseEntity.ok(resultado);
     }
 }
