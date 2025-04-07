@@ -55,6 +55,7 @@ public class VotoService {
         Voto voto = new Voto();
         voto.setCpfAssociado(votoRequest.getCpfAssociado());
         voto.setOpcao(votoRequest.getOpcao());
+        voto.setCreatedAt(LocalDateTime.now());
         voto.setSessaoVotacao(sessao);
 
         Voto salvo = votoRepository.save(voto);

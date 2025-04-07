@@ -33,11 +33,12 @@ public class SessaoVotacaoService {
 
         SessaoVotacao sessao = new SessaoVotacao();
         LocalDateTime inicio = LocalDateTime.now();
-
         LocalDateTime fim = inicio.plusMinutes(sessaoRequest.getDuracao());
+
         sessao.setInicio(inicio);
         sessao.setFim(fim);
         sessao.setPauta(pauta);
+        sessao.setUpdatedAt(LocalDateTime.now());
         SessaoVotacao sessaoSalva = sessaoRepository.save(sessao);
 
         return new SessaoVotacaoResponseDTO(
